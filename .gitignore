@@ -5,7 +5,12 @@
 
 data.csv
 RCS-A_BXA20210028.xml
+RCS-A_test_1.xml
+RCS-A_test_2.xml
 RCS-A_BXA20210005.taz
+.idea
+__pycache__
+*.pyc
 
 ### Flask ###
 instance/*
@@ -14,9 +19,10 @@ instance/*
 
 ### Flask.Python Stack ###
 # Byte-compiled / optimized / DLL files
-__pycache__/
+__pycache__
 *.py[cod]
 *$py.class
+.vscode
 
 # C extensions
 *.so

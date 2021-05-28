@@ -2,15 +2,6 @@ import requests
 import json
 from csv_ape import ape_dict
 
-
-sirenn_api = []
-siret = []
-s_ape = []
-s_activite_insee= []
-adresse = []
-
-
-
 def api_request(siren):
 
     url3 = f"https://entreprise.data.gouv.fr/api/sirene/v3/unites_legales/{siren}"
@@ -25,18 +16,19 @@ def api_request(siren):
             activite_insee = clean
 
         except:
-            code_ape = "APE Non Diffusable"
+            code_ape = "0000Z"
             activite_insee = "APE Non Diffusable"
             
     elif response.status_code == 429:
-        print(response.status_code)
-        print(" TOO MANY REQUEST "*10)
-        code_ape = "APE Non Diffusable"
+        #print(response.status_code)
+        #print(" TOO MANY REQUEST "*10)
+        code_ape = "0000Z"
         activite_insee = "APE Non Diffusable"
+
     else:
-        print(response.status_code)
-        print(" BAD REQUEST" )
-        code_ape = "APE Non Diffusable"
+        #print(response.status_code)
+        #print(" BAD REQUEST" )
+        code_ape = "0000Z"
         activite_insee = "APE Non Diffusable"
 
     return activite_insee, code_ape

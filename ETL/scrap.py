@@ -25,7 +25,7 @@ def extract_tar(test):
 
 def download(test):
     """ download taz file from Bodacc """
-    url2 = f"https://echanges.dila.gouv.fr/OPENDATA/BODACC/2021/{test}"
+    url2 = f'https://echanges.dila.gouv.fr/OPENDATA/BODACC/FluxHistorique/2020/{test}'
     response = requests.get(url2, stream=True)
     if os.path.isfile(f'./{test}') is False:
         if response.status_code == 200:
@@ -38,7 +38,7 @@ def download(test):
 
 def scrap ():
     """ scrapp bodacc request """
-    url = 'https://echanges.dila.gouv.fr/OPENDATA/BODACC/2021/'
+    url = 'https://echanges.dila.gouv.fr/OPENDATA/BODACC/FluxHistorique/2020/'
     r = get(url, allow_redirects=True)
     soup = bs4.BeautifulSoup(r.content, "lxml")
 
@@ -46,9 +46,11 @@ def scrap ():
     pages = soup.findAll('a', href=re.compile('RCS-A'))
     print("Total Links Found:", pages.__len__())
     for l in pages:
+        print(l)
         download(l.get('href'))
+        print(l)
 
 
 if __name__ == '__main__':
-    pass
-    #scrap()
+    #pass
+    scrap()

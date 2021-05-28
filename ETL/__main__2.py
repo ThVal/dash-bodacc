@@ -2,7 +2,7 @@ import xml.etree.ElementTree as et
 import csv
 import time
 import glob, os
-from download_extract import download, extract_tar, test
+#from download_extract import download, extract_tar, test
 from parserr import parsing
 from tqdm import tqdm
 
@@ -27,29 +27,38 @@ for file in glob.glob("*.xml"):
 print(nb_fil_total)
 
 
-liste = []
+fieldnames = ['type', 'siren', 'forme_juridique', 'activite', 'activite_insee', 'code_ape', 'code_postal', 'date_immat']
 
-for file in glob.glob("*.xml"):
+#context manager > on crée un CSV 
+with open('data_2020.csv', 'w', newline='') as output_file:
 
-    print(file)
-    y +=1
+            dict_writer = csv.DictWriter(output_file, fieldnames)
+            dict_writer.writeheader()
 
-    nb_entree_ds_fichier = 0
 
-    tree = et.parse(file)
-    root = tree.getroot()
+            for file in glob.glob("*.xml"):
 
-    date = root.findtext('dateParution')
-    x = root.findall('.//avis')
+                print(file)
+                y +=1
 
-    for root1 in tqdm(root.iter("avis"), total=len(x), desc='Progress'):
-        #print(f'FICHIER n° {y}/{nb_fil_total}')
-        nb_entree_ds_fichier += 1
-        total_entrees += 1
-        #print(f'Entrée n°{nb_entree_ds_fichier} de {file} pour {total_entrees} entrées totales')
-        liste = parsing(root1, date)
+                nb_entree_ds_fichier = 0
 
-    #database.add_entreprise(liste)
+                tree = et.parse(file)
+                root = tree.getroot()
+
+                date = root.findtext('dateParution')
+                x = root.findall('.//avis')
+
+                for root1 in tqdm(root.iter("avis"), total=len(x), desc='Progress'):
+                    nb_entree_ds_fichier += 1
+                    total_entrees += 1
+
+                    row = parsing(root1, date)
+
+                    #attention on ecrit un seul row donc writerow et non writerows !!!
+                    dict_writer.writerow(row)     
+    
+#database.add_entreprise(liste)
 
 """ time counter """
 end_time = time.time()
@@ -57,12 +66,8 @@ temps = end_time - start_time
 print(f"le temps d'execution du script est de {round(temps)} s, soit {round(temps / 60)} min , soit {round(temps/3600)} heures")
 
 
-""" export dic list to csv"""
-keys = liste[0].keys()
-with open('data_test.csv', 'w', newline='') as output_file:
-    dict_writer = csv.DictWriter(output_file, keys)
-    dict_writer.writeheader()
-    dict_writer.writerows(liste)
+
+
 
 
 

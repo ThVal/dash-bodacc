@@ -1,4 +1,5 @@
 import xml.etree.ElementTree as et
+import csv
 import os
 import time
 from api import api_request
@@ -24,7 +25,6 @@ def parsing(root1,date):
     try:
         siren2 = siren.replace(' ', '')
     except:
-        print(siren)
         siren2 = "non immatricule"
 
     temp = root1.findtext('personnes/personne/adresse/france/codePostal')
@@ -59,12 +59,10 @@ def parsing(root1,date):
 
     time.sleep(0.15)
     activite_insee, code_ape = api_request(siren2)
+    creation = 'creation'
 
 
-
-    liste.append(
-
-        {'type' : 'creation',
+    row = {'type' : creation,
          'siren': siren2,
          'forme_juridique' : forme_juridique,
          'activite': activite_declaree,
@@ -73,9 +71,7 @@ def parsing(root1,date):
          'code_postal': code_postal,
          'date_immat' :date_immat
          }
-    
-    )
 
-    return liste
+    return row
 
 
