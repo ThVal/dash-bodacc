@@ -29,6 +29,9 @@ def parsing(root1,date):
 
     temp = root1.findtext('personnes/personne/adresse/france/codePostal')
 
+
+
+
     """ recuperation forme entreprise"""
 
     if root1.findtext('personnes/personne/personneMorale/formeJuridique') is None:
@@ -56,6 +59,8 @@ def parsing(root1,date):
             date_immat = root1.findtext('acte/immatriculation/dateImmatriculation')
     else:
         date_immat = root1.findtext('acte/creation/dateImmatriculation')
+
+    # timeout because of insee API > ban risk if too many requests /s
 
     time.sleep(0.15)
     activite_insee, code_ape = api_request(siren2)

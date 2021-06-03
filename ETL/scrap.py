@@ -12,7 +12,6 @@ then
 
 unzip.taz to .xml
 
-# functionnal but unactivated. download_extract.py is enough for testing now
 """
 
 
@@ -31,7 +30,7 @@ def download(test):
         if response.status_code == 200:
             with open(test, 'wb') as f:
                 f.write(response.raw.read())
-                print(f'downloadfing {test}')
+                print(f'downloading {test}')
             extract_tar(test)
     else:
         print('file already there')
@@ -46,9 +45,8 @@ def scrap ():
     pages = soup.findAll('a', href=re.compile('RCS-A'))
     print("Total Links Found:", pages.__len__())
     for l in pages:
-        print(l)
+        
         download(l.get('href'))
-        print(l)
 
 
 if __name__ == '__main__':
