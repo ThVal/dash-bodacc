@@ -2,21 +2,14 @@ import xml.etree.ElementTree as et
 import csv
 import time
 import glob, os
-#from download_extract import download, extract_tar, test
 from parserr import parsing
 from tqdm import tqdm
-
-"""dowloading + extracting with download_extract.py"""
-#download()
-#extract_tar(test)
-
 
 os.chdir("./.")
 total_entrees = 0
 y = 0
 nb_entree_ds_fichier = 0
 nb_fil_total = 0
-
 """ chrono on """
 start_time = time.time()
 
